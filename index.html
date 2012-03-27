@@ -1,1 +1,61 @@
-Test page
+<html>
+    <head>
+		<script src="Script/jquery-1.4.4.min.js" type="text/javascript"></script>
+		<script src="Script/jquery.tmpl.min.js" type="text/javascript"></script>
+		<script src="Script/knockout-1.2.1.js" type="text/javascript"></script>
+		<script type="text/javascript">
+			function valueTerm(name, type) {
+				this.name = ko.observable(name);
+				this.type = ko.observable(type);
+				this.remove = function() { ownerViewModel.tasks.remove(this) }
+			}
+			var vocabularyViewModel = {
+				this.valueTerms = ko.observableArray([]);
+				this.newvalueTermName = ko.observable();
+				this.newvalueTermType = ko.observable();
+				this.addValueTerm = function() {
+					this.valueTerms.push(new valueTerm(this.newvalueTermName(), this.newvalueTermType()));
+					this.newValueTermName("");
+					this.newValueTermType("");
+				}
+			};
+			$(function() {
+				ko.applyBindings(vocabularyViewModel);
+			});
+		</script>
+    </head>
+    <body>
+		<h3>Vocabulary</h3>
+
+		<form data-bind="submit: addValueTerm">
+			Value term name: <input data-bind="value: newValueTermName" placeholder="Term Name?" />
+			Value term type: <input data-bind="value: newValueTermType" placeholder="Term Type?" />
+			<button type="submit">Add Value Term</button>
+		</form>
+		
+		<ul data-bind="template: { name: 'taskTemplate', foreach: valueTerms }, visible: tasks().length > 0"></ul>
+		<script type="text/html" id="taskTemplate">
+			<li>
+				<input type="checkbox" data-bind="checked: isDone" />
+				<input data-bind="value: title, enable: !isDone()" />
+				<a href="#" data-bind="click: remove">Delete</a>
+			</li>
+		</script>
+	</body>
+</html>
+
+<!--
+<Schema Namespace="odata.org.vocabs.Validation" Alias="Validation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+   <EntityType Name="Range" BaseType="Edm.TypeTerm">
+      <Property Name="Min" Type="Edm.Decimal" Nullable="True" />
+      <Property Name=”Max” Type="Edm.Decimal" Nullable="True" />
+   </EntityType>
+</Schema>
+-->
+
+<!--
+<Schema NamespaceUri="http://vocabularies.foo.com/Display" Alias=”Display” xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+   <ValueTerm Name="Title" Type="Edm.String" />
+   <EntityType Name="Hide" BaseType="Edm.TypeTerm" />
+</Schema>
+-->

@@ -1,11 +1,20 @@
 [
-	{
-		"target": "NetflixCatalog", 
-		"termNamespace": "Org.Odata.Display", 
-		"term": "isHidden", 
-		"annotationValue": {
-			"expression": "Boolean",
-			"value": "true"
-		}
-	}
+    {
+        "kind": "ValueAnnotation",
+        "target": "NetflixCatalog.Title",
+        "targetSchemaType": "EntityType",
+        "termNamespace": "Org.Odata.Display", 
+        "term": "isHidden", 
+        "expression": "Boolean",
+        "value": "true"
+    },
+    {
+        "kind": "ValueAnnotation",
+        "target": "NorthWind",
+        "targetSchemaType": "EntitySet",
+        "termNamespace": "Org.Odata.Display", 
+        "term": "isHidden", 
+        "expression": "Boolean",
+        "value": "true"
+    }
 ]
